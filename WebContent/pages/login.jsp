@@ -16,7 +16,7 @@
         ===
     -->
     <meta charset="utf-8">
-    <title>Free HTML5 Bootstrap Admin Template</title>
+    <title>Online Exam | Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
     <meta name="author" content="Muhammad Usman">
@@ -65,9 +65,19 @@
 
     <div class="row">
         <div class="well col-md-5 center login-box">
-            <div class="alert alert-info">
+        <% 
+        if(request.getParameter("error")==null){%>
+        <div class="alert alert-info">
                 Please login with your Username and Password.
             </div>
+            <%}
+        	else
+        	{%>
+        <div class="alert alert-danger">
+                <%=request.getParameter("error") %>
+            </div>
+            <%} %>
+            
             <form class="form-horizontal" action="loginprocess.jsp" method="post">
                 <fieldset>
                 	

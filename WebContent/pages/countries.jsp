@@ -1,4 +1,8 @@
 <%@ page language="java" import="java.sql.*, java.io.*, java.util.*" %>
+<%@ page language="java" contentType="text/html; charset=US-ASCII" pageEncoding="US-ASCII"%>
+
+<%@ page import='javax.sql.*' %>
+<%@ page import='javax.naming.*' %>
 
 
 <%
@@ -13,8 +17,14 @@ try{
 	Class.forName(driverstr);
 	String urlstr=p.getProperty("url");
 	Connection con=DriverManager.getConnection(urlstr,p); */
-	Class.forName("com.mysql.jdbc.Driver");
-	Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/onlineexam","root","");
+	InitialContext ic = new InitialContext();
+    Context initialContext = (Context) ic.lookup("java:comp/env");
+    DataSource datasource = (DataSource) initialContext.lookup("jdbc/MySQLDS");
+    //result = datasource.getConnection();
+	Connection con=datasource.getConnection(); 
+	/* Class.forName("com.mysql.jdbc.Driver")
+	Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/onlineexam","root",""); */
+
 	PreparedStatement ps1= con.prepareStatement("select distinct Subject from quizques" );
 	StringBuffer values = new StringBuffer();
 %> 
@@ -46,8 +56,8 @@ ResultSet rs1=ps.executeQuery();
 while(rs1.next())
 {
 	String quizname=rs1.getString(1);
-	out.println(quizname);
-
+/* 	out.println(quizname);
+ */
 
 %>
 <script type="text/javascript">

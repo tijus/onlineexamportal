@@ -121,59 +121,8 @@
                     <div class="contents">
 
 
-<%
-String uname=(String)session.getAttribute("username");
-String cat=(String)session.getAttribute("category");
-if(uname.equals(null) || cat.equals(null)){
-	out.print("<font size='2' color='red' m>Please do Login First</font>");
-%>
-<jsp:forward page="login.jsp"></jsp:forward>
-<%
-}
-else if(cat.equals("Teacher"))
-{
-	out.print("<h1 style='color:red'>You don't have permission to perform this action</h1>");	
-}
 
-
-else {
-	String val=request.getParameter("score");
-	out.println(val);
-	session.setAttribute("scoreres",val);
-	out.println((String)session.getAttribute("scoreres"));
-%>			<div class="col-lg-3">
-  		   		<form class="form-horizontal" method="get" name="myform" action="get.jsp">
-					
-					<jsp:include page="countries.jsp"></jsp:include>
-					
-					<div class="form-group">
-					<label for="country">Select Subject:</label>
-					<select id="country" name ="sub" class="form-control"></select> 
-					</div>
-					<div class="form-group">
-	  				<label for="quizname">Select Quiz Name:</label> 
-	  				<select name ="quizname" id ="state" class="form-control"></select></div>
-	  				
-					<div class="checkbox">
-					<input type="checkbox" name="id" value="1"/>Confirm Test</div>
-					<div class="form-group"><br>
-					<!-- <input type="submit" value="Sign in"/></div> -->            
-					<button type="submit" class="btn btn-default">Sign in</button>
-                		
-			
-					
-                     </form></div>
- </div>
- 
-<script language="javascript">
-	  	populateCountries("country", "state"); // first parameter is id of country drop-down and second parameter is id of state drop-down
-	  	populateCountries("country2");
-	  	populateCountries("country2");
-	  </script>  
-
-<%}%>
-                    
-                </div>
+               
                 
                 
             </div>
@@ -207,8 +156,7 @@ else {
         </div>
     </div>
 
-   <jsp:include page="footer.jsp"></jsp:include>
-
+    <jsp:include page="footer.jsp"></jsp:include>
 </div><!--/.fluid-container-->
 
 <!-- external javascript -->

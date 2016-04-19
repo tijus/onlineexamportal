@@ -1,5 +1,7 @@
-<%@ page language="java" import="java.util.*" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=US-ASCII" pageEncoding="US-ASCII"%>
 <%@page import="java.sql.*"%>
+<%@ page import='javax.sql.*' %>
+<%@ page import='javax.naming.*' %>
 <%@ include file="counter.jsp" %>
 <%@page import="java.io.*"%>
 
@@ -9,8 +11,14 @@
 <%
  try {
 
-	 Class.forName("com.mysql.jdbc.Driver");
-		Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/onlineexam","root","");
+	 InitialContext ic = new InitialContext();
+	    Context initialContext = (Context) ic.lookup("java:comp/env");
+	    DataSource datasource = (DataSource) initialContext.lookup("jdbc/MySQLDS");
+	    //result = datasource.getConnection();
+		Connection con=datasource.getConnection(); 
+	/* 	Class.forName("com.mysql.jdbc.Driver");
+		Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/onlineexam","root","");*/
+
 //String quizid= request.getParameter("qid");
 //System.out.println("-------->"+quizid);
 String quizname=(String)session.getAttribute("quizname1");

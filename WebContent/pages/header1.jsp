@@ -1,6 +1,5 @@
 <%
-String uname=(String)session.getAttribute("username");
-String cat=(String)session.getAttribute("category");
+String uname=(String)session.getAttribute("username"); 
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,15 +19,11 @@ String cat=(String)session.getAttribute("category");
         ===
     -->
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-	<%
-	if(uname==null)
-	{
-	%>
-    <title>Online Exam | Home</title>
-    <%}else{
-    	%>
-    	<title>Online Exam | <%=cat%></title>
-    <%} %>
+    <title>Online Exam | Homes</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
+    <meta name="author" content="Muhammad Usman">
+
     <!-- The styles -->
     <link id="bs-css" href="css/bootstrap-cerulean.min.css" rel="stylesheet">
 
@@ -72,7 +67,7 @@ String cat=(String)session.getAttribute("category");
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.jsp"> 
+            <a class="navbar-brand" href="index.html"> 
                 <span>OnlineExam </span></a>
 
             <!-- user dropdown starts -->

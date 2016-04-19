@@ -1,5 +1,6 @@
-<%@ page language="java" import="java.util.*" pageEncoding="ISO-8859-1"%>
-<%@ page import="java.sql.*" %>
+<%@page import="java.sql.*"%>
+<%@ page import='javax.sql.*' %>
+<%@ page import='javax.naming.*' %>
 <%@ page import="java.io.*" %>
 <%--<%@page import="com.sun.org.apache.bcel.internal.generic.Select"--%>
 <%@ include file="counterexam.jsp" %>
@@ -9,28 +10,7 @@
 <link href='css/noty_theme_default.css' rel='stylesheet'>
             <ul class="collapse navbar-collapse nav navbar-nav top-menu">
                 <li><a href="#"><i class="glyphicon glyphicon-globe"></i> Visit Site</a></li>
-                <!-- <li class="dropdown">
-                    <a href="#" data-toggle="dropdown"><i class="glyphicon glyphicon-star"></i> Actions <span
-                            class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">Make quiz</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">Take quiz</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">Book slot</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">One more separated link</a></li>
-                    </ul>
-                </li> -->
-                <!-- <li>
-                    <form class="navbar-search pull-left">
-                        <input placeholder="Search" class="search-query form-control col-md-10" name="query"
-                               type="text">
-                    </form>
-                </li> -->
-            </ul>
+                            </ul>
 
         </div>
     </div>
@@ -56,21 +36,12 @@
     <div class="box col-md-10" style="margin-left:10%">
         <div class="box-inner">
             <div class="box-header well">
-                <h2><i class="glyphicon glyphicon-info-sign"></i> Introduction</h2>
-
-                <!-- <div class="box-icon">
-                    <a href="#" class="btn btn-setting btn-round btn-default"><i
-                            class="glyphicon glyphicon-cog"></i></a>
-                    <a href="#" class="btn btn-minimize btn-round btn-default"><i
-                            class="glyphicon glyphicon-chevron-up"></i></a>
-                    <a href="#" class="btn btn-close btn-round btn-default"><i
-                            class="glyphicon glyphicon-remove"></i></a>
-                </div> -->
+                <h2><i class="glyphicon glyphicon-info-sign"></i>Good luck for your exam</h2>
             </div>
             <div class="box-content row">
                 <div class="col-lg-12">
-                    <div class="header"><h1><%=request.getParameter("sub") %>:<%=request.getParameter("quizname") %></h1> <hr></div><br>
-                    <jsp:include page="timer.jsp"></jsp:include>
+                    <div class="header"> <hr></div><br>
+                    
                     <div class="contents">
                 		 <%
                 		 String count=request.getParameter("id");
@@ -78,7 +49,7 @@
                 		 String name=request.getParameter("quizname");
                 		 int counter=Integer.parseInt(count); 
                 		 //out.println(counter);
-                		 String scoreparam=request.getParameter("score");
+                		 String scoreparam=(String)session.getAttribute("scoreres");
                 		 int scoreconvert=Integer.parseInt(scoreparam); 
                 		 session.setAttribute("countervariable", counter);
                 		 session.setAttribute("subject", subject);
@@ -97,14 +68,17 @@ if(uname==null || cat == null){
 <jsp:forward page="index.jsp"></jsp:forward>
 <%
 }else{
-
-
-
 //System.out.println(name);
 try{
-	Class.forName("com.mysql.jdbc.Driver");
+	
+	InitialContext ic = new InitialContext();
+    Context initialContext = (Context) ic.lookup("java:comp/env");
+    DataSource datasource = (DataSource) initialContext.lookup("jdbc/MySQLDS");
+    //result = datasource.getConnection();
+	Connection con=datasource.getConnection();
+	/*Class.forName("com.mysql.jdbc.Driver");
+	Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/onlineexam","root","");*/
 
-	Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/onlineexam","root","");
 
 PreparedStatement ps1= con.prepareStatement("select * from quizques where quesno=? and Subject = ? and Quizname = ?" );
 ps1.setInt(1,counter);
@@ -125,21 +99,25 @@ if(rs.next()){
 	%>
 	           
 	
-			
+					<jsp:include page="timer.jsp"></jsp:include>
 					<tr><td><h4 style="color:black"><% out.println(quesno+". ");%><%= question%></h4> </td></tr>
 					<tr><td><div class="radio"><label><input type="radio" name="radio" value="<%=option1%>"><%=option1%></label></div></td></tr>	
 					<tr><td><div class="radio"><label><input type="radio" name="radio" value="<%=option2%>"><%=option2%></label></div></td></tr>
 					<tr><td><div class="radio"><label><input type="radio" name="radio" value="<%=option3%>"><%=option3%></label></div></td></tr>
 					<tr><td><div class="radio"><label><input type="radio" name="radio" value="<%=option4%>"><%=option4%></label></div></td></tr>
                     
-                    <tr><td></td><td><input class="btn btn-default" type="submit" value="Next"/></td></tr>
+                    <tr><td></td><td><input class="btn btn-default" type="submit" value="Next"/></td><td><a href="index.jsp"><h4>End Test</h4></a></td></tr>
 
                     	
 <%
 }
-else
-{
+else{%>
+<jsp:include page="redirect.jsp"></jsp:include>
+<%
+
+	
 	out.println("<h3 style='color:red'>Congratulations for completing the test. Your score is "+scoreparam+"</h3>");
+	out.println("<h3 style='color:red'><a href='index.jsp'>Go to home page</a> </h3>");
 }
 }
 catch(Exception e){
@@ -151,33 +129,7 @@ catch(Exception e){
                      </form>                     
  </div>
  
-                </div>
-                <!-- Ads, you can remove these -->
-                <!-- <div class="col-lg-5 col-md-12 hidden-xs center-text">
-                    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-                    Charisma Demo 4
-                    <ins class="adsbygoogle"
-                         style="display:inline-block;width:336px;height:280px"
-                         data-ad-client="ca-pub-5108790028230107"
-                         data-ad-slot="9467443105"></ins>
-                    <script>
-                        (adsbygoogle = window.adsbygoogle || []).push({});
-                    </script>
-                </div>
-
-                <div class="col-lg-5 col-md-12 visible-xs center-text">
-                    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-                    Charisma Demo 5
-                    <ins class="adsbygoogle"
-                         style="display:inline-block;width:250px;height:250px"
-                         data-ad-client="ca-pub-5108790028230107"
-                         data-ad-slot="8957582309"></ins>
-                    <script>
-                        (adsbygoogle = window.adsbygoogle || []).push({});
-                    </script>
-                </div>
- -->                <!-- Ads end -->
-
+                </div>          
             </div>
         </div>
     </div>
@@ -189,34 +141,7 @@ catch(Exception e){
 
     <hr>
 
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-         aria-hidden="true">
-
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">×</button>
-                    <h3>Settings</h3>
-                </div>
-                <div class="modal-body">
-                    <p>Here settings can be configured...</p>
-                </div>
-                <div class="modal-footer">
-                    <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
-                    <a href="#" class="btn btn-primary" data-dismiss="modal">Save changes</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <footer class="row">
-        <p class="col-md-9 col-sm-9 col-xs-12 copyright">&copy; <a href="http://usman.it" target="_blank">Muhammad
-                Usman</a> 2012 - 2015</p>
-
-        <p class="col-md-3 col-sm-3 col-xs-12 powered-by">Powered by: <a
-                href="http://usman.it/free-responsive-admin-template">Charisma</a></p>
-    </footer>
-
+ <jsp:include page="footer.jsp"></jsp:include>
 </div><!--/.fluid-container-->
 
 <!-- external javascript -->

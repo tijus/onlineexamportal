@@ -1,5 +1,9 @@
 <%@ page language="java" import="java.util.*" pageEncoding="ISO-8859-1"%>
 <jsp:include page="header.jsp"></jsp:include>
+<%
+String uname=(String)session.getAttribute("username");
+String cat=(String)session.getAttribute("category");
+%>
             <ul class="collapse navbar-collapse nav navbar-nav top-menu">
                 <li><a href="#"><i class="glyphicon glyphicon-globe"></i> Visit Site</a></li>
                 <!-- <li class="dropdown">
@@ -31,20 +35,11 @@
 <div class="ch-container">
     <div class="row">
         
-        <!-- left menu starts -->
+        
         <jsp:include page="sidebar.jsp"></jsp:include>
-                <!--/span-->
-        <!-- left menu ends -->
+        
 
-        <noscript>
-            <div class="alert alert-block col-md-12">
-                <h4 class="alert-heading">Warning!</h4>
-
-                <p>You need to have <a href="http://en.wikipedia.org/wiki/JavaScript" target="_blank">JavaScript</a>
-                    enabled to use this site.</p>
-            </div>
-        </noscript>
-
+        
         <div id="content" class="col-lg-10 col-sm-10">
             <!-- content starts -->
             <div>
@@ -98,21 +93,77 @@
         </a>
     </div>
 </div>
+<%
 
+
+if(uname==null)
+{
+%>
+<div class="row">
+    <div class="box col-md-9">
+        <div class="box-inner">
+            <div class="box-header well">
+                <h2><i class="glyphicon glyphicon-info-sign"></i> Introduction</h2>
+
+                
+            </div>
+            <div class="box-content row">
+                <div class="col-lg-12">
+                    <div class="header"><h1>Welcome to examination center</h1> <hr></div><br>
+                    
+                    <div class="contents">
+                     <p>Now Teacher and Student can work together
+ online.Tutors are most welcomed to my site 
+ they can create Questions simply by clicking Make
+ Questions link.And Students can appear in questions based on various subject. </p>
+
+ Take a while..
+                    
+                       </div>
+ </div>
+ </div></div></div>
+<div class="row">
+    <div class="box col-md-3">
+        <div class="box-inner">
+            <div class="box-header well">
+                <h2><i class="glyphicon glyphicon-info-sign"></i> Notifications</h2>
+
+                
+            </div>
+            <div class="box-content row">
+                
+                    
+                    <div class="contents" style="margin-left:20%;">
+                    <marquee direction="up" scrollamount="3">
+	                    
+	                    Notification 1<br><br>
+	                    Notification 1<br><br>
+	                    Notification 1<br><br>
+	                    Notification 1<br><br>
+	                    Notification 1<br><br>
+	                    Notification 1<br><br>
+	                    Notification 1<br><br>
+	                    Notification 1<br><br>
+	                    
+                    </marquee>
+                    	                       </div>
+ </div>
+ </div>
+
+        </div>
+    </div>
+</div>
+  
+<%}
+else
+{%>
 <div class="row">
     <div class="box col-md-12">
         <div class="box-inner">
             <div class="box-header well">
                 <h2><i class="glyphicon glyphicon-info-sign"></i> Introduction</h2>
 
-                <!-- <div class="box-icon">
-                    <a href="#" class="btn btn-setting btn-round btn-default"><i
-                            class="glyphicon glyphicon-cog"></i></a>
-                    <a href="#" class="btn btn-minimize btn-round btn-default"><i
-                            class="glyphicon glyphicon-chevron-up"></i></a>
-                    <a href="#" class="btn btn-close btn-round btn-default"><i
-                            class="glyphicon glyphicon-remove"></i></a>
-                </div> -->
+                
             </div>
             <div class="box-content row">
                 <div class="col-lg-12">
@@ -123,62 +174,42 @@
  online.Tutors are most welcomed to my site 
  they can create Questions simply by clicking Make
  Questions link.And Students can appear in questions based on various subject. </p>
-<b>Exam Instructions
+
+<b>Please follow the following exam instructions</b>
+<ul>
+<li>The exam will have 10 questions</li>
+<li>Answering each question is compulsory.</li>
+<li>Each question must be answered before 60sec.(1min)</li>
+<li>Please call the invigilator for any queries</li>
+</ul>
 
  Take a while..
  </div>
+ <form class="form-horizontal" method="get" name="myform" action="takequiz.jsp">
+ <div class="checkbox" align="center">  
+					<input type="checkbox" name="score" value="0"/>I agree with terms and condition</div>
  <div align="center">
- <button class="btn btn-lg btn-default">Proceed for test</button></div>
-
- 
-
-
-                    
-                </div>
-                <!-- Ads, you can remove these -->
-                <!-- <div class="col-lg-5 col-md-12 hidden-xs center-text">
-                    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-                    Charisma Demo 4
-                    <ins class="adsbygoogle"
-                         style="display:inline-block;width:336px;height:280px"
-                         data-ad-client="ca-pub-5108790028230107"
-                         data-ad-slot="9467443105"></ins>
-                    <script>
-                        (adsbygoogle = window.adsbygoogle || []).push({});
-                    </script>
-                </div>
-
-                <div class="col-lg-5 col-md-12 visible-xs center-text">
-                    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-                    Charisma Demo 5
-                    <ins class="adsbygoogle"
-                         style="display:inline-block;width:250px;height:250px"
-                         data-ad-client="ca-pub-5108790028230107"
-                         data-ad-slot="8957582309"></ins>
-                    <script>
-                        (adsbygoogle = window.adsbygoogle || []).push({});
-                    </script>
-                </div>
- -->                <!-- Ads end -->
-
-            </div>
+ <button class="btn btn-lg btn-default" type="submit">Proceed for test</button></div></form></div>
+ </div>
         </div>
     </div>
 </div>
-
+ 
+<%} %>                
+                
+            
 
 
     <!-- Ad ends -->
 
     <hr>
-
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">
 
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <button type="button" class="close" data-dismiss="modal">Ã</button>
                     <h3>Settings</h3>
                 </div>
                 <div class="modal-body">
@@ -192,14 +223,14 @@
         </div>
     </div>
 
+
     <footer class="row">
-        <p class="col-md-9 col-sm-9 col-xs-12 copyright">&copy; <a href="http://usman.it" target="_blank">Muhammad
-                Usman</a> 2012 - 2015</p>
+        <p class="col-md-9 col-sm-9 col-xs-12 copyright">&copy; <a href="http://usman.it" target="_blank">Impetus Consultrainers</a> 2012 - 2015</p>
 
         <p class="col-md-3 col-sm-3 col-xs-12 powered-by">Powered by: <a
-                href="http://usman.it/free-responsive-admin-template">Charisma</a></p>
+                href="http://usman.it/free-responsive-admin-template">Impetus</a></p>
     </footer>
-
+</div>
 </div><!--/.fluid-container-->
 
 <!-- external javascript -->
